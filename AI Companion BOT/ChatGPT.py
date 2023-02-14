@@ -29,6 +29,7 @@ class ChatGPT:
     def getAnswer(self, message, lang="ru", max_tokens=1000, temperature=0.7, engine_model="text-davinci-003"):
         i = 0
         errors = False
+        message = mtranslate.translate(message, "en", "auto")
         while(True):
             try:
                 # Считаем количество токенов
@@ -36,7 +37,7 @@ class ChatGPT:
                 # Если количество токенов превышает допустимое количество, то возращаем сообщение с ошибкой
                 if(num_tokens > max_tokens):
                     errors = True
-                    return {"message": mtranslate.translate("❌ You have exceeded the limit on the number of tokens. Please shorten your message.", lang, "auto"), "list_keys":self.api_keys_list, "attempts":i, "errors":errors}
+                    return {"message": mtranslate.translate("❌ You have exceeded the limit on the number of tokens. Please shorten your message.", lang, "auto"), "list_keys":self.api_keys_list, "attempts":i, "errors":errors, "num_tokens":num_tokens}
 
                 # Отправляем текст на серверы OpenAI и получаем ответ
                 response = openai.Completion.create(
@@ -55,12 +56,12 @@ class ChatGPT:
                     result = "❌ Sorry, the bot didn't return the result.";
 
                 # Возращаем результат работы
-                return {"message": mtranslate.translate(result, lang, "auto"), "list_keys":self.api_keys_list, "attempts":i, "errors":errors}
+                return {"message": mtranslate.translate(result, lang, "auto"), "list_keys":self.api_keys_list, "attempts":i, "errors":errors, "num_tokens":num_tokens}
             except Exception as e:
                 # Если на аккаунте Chat GPT закончилась квота, меням ключ
                 if "You exceeded your current quota" in str(e):
                     if(self.RemoveKey()):
-                        return {"message": mtranslate.translate("❌ I'm sorry, but an unexpected error has occurred", lang, "auto"), "list_keys":self.api_keys_list, "attempts":i, "errors":errors}
+                        return {"message": mtranslate.translate("❌ I'm sorry, but an unexpected error has occurred", lang, "auto"), "list_keys":self.api_keys_list, "attempts":i, "errors":errors, "num_tokens":num_tokens}
                 else:
                     i += 1
     # Функция удаления ключа из списка
