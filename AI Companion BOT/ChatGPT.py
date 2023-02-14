@@ -61,7 +61,8 @@ class ChatGPT:
                 if "You exceeded your current quota" in str(e):
                     if(self.RemoveKey()):
                         return {"message": mtranslate.translate("❌ I'm sorry, but an unexpected error has occurred", lang, "auto"), "list_keys":self.api_keys_list, "attempts":i, "errors":errors}
-                i += 1
+                else:
+                    i += 1
     # Функция удаления ключа из списка
     def RemoveKey(self):
         if(len(self.api_keys_list) > 1):
