@@ -64,7 +64,6 @@ class ChatGPT:
                 i += 1
     # Функция удаления ключа из списка
     def RemoveKey(self):
-        print(len(self.api_keys_list))
         if(len(self.api_keys_list) > 1):
             self.api_keys_list.remove(self.api_keys_list[0])
             openai.api_key = self.api_keys_list[0]
