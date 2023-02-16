@@ -1,4 +1,10 @@
-BOT_API_TOKEN = '6296575789:'
-CHAT_API_TOKEN = 'sk-'
-CHAT_API_TOKEN_BOT = 'sk-'
+BOT_API_TOKEN = ''
+CHAT_API_TOKEN = ''
+#CHAT_API_TOKEN = ''
+
+#CHAT_GPT_LIST = ['api']
+
+
 DATABASE = 'database.db'
+
+NAME_BOT_COMMAND = 'Иванов'

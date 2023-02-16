@@ -84,6 +84,7 @@ class TelegramBot:
         text = f"🖥 Личный кабинет пользователя:\n\n🆔 Ваш ID: {user_id};\n🙋‍♂️ Ваше имя: {message.from_user.username};\n\n💰 Осталось: {balance}₽ ~ {tokens} токенов;"
         await self.bot.send_message(chat_id=message.chat.id, text=text, reply_to_message_id=message.message_id)
 
+    # Функция ответа на сообщение
     async def echo_message(self, message: types.Message):
         message_id = message.message_id
         rq = message.text
@@ -94,6 +95,17 @@ class TelegramBot:
         if not self.CheckUser(userid):
             self.RegisterUser(username, userid, firstname, lastname)
 
+        #me = self.bot.get_me()
+        #print(me.username)
+
+        ## Ответное сообщение пользователю на реакцию:
+        #if rq in ['Спасибо!', 'Благодарю!', 'Благодарствую!', 'Мерси!', 'Большое спасибо!', 'Спасибо большое', 'Спасибо', 'Благодарю', 'Благодарствую', 'Мерси', 'Большое спасибо', 'Спасибо большое', 'Спасибо большое,', 'Спасибо,', 'Благодарю,', 'Благодарствую,', 'Мерси,', 'Большое спасибо,', 'Спасибо за ответ', 'Спасибо за ответ!', 'Спасибо за информацию!', 'Спасибо за информацию.']:
+        #    if message.reply_to_message and message.reply_to_message.from_user.username:
+        #        #recipient_username = message.reply_to_message.from_user.username
+        #        await self.bot.send_message(chat_id=message.chat.id, text=f"❤️ @{me.username} выразил(а) Вам благодарность!", reply_to_message_id=message.reply_to_message.message_id)
+        #        #print(f"(@{username} -> bot): {rq}\n(bot -> @{username}): ❤️ @{me.username} выразил(а) Вам благодарность!")
+        #        return
+
         # Анимация "Печатает":
         await self.bot.send_chat_action(chat_id=message.chat.id, action='typing')
     
@@ -103,8 +115,3 @@ class TelegramBot:
             await self.bot.send_message(chat_id=message.chat.id, text=generated_text["message"], reply_to_message_id=message_id)
             print(f"(@{username} -> bot): {rq}\n(bot -> @{username}): {generated_text['message']}")
 
-        # Ответное сообщение пользователю на реакцию:
-        if message.text in ['Спасибо!', 'Благодарю!', 'Благодарствую!', 'Мерси!', 'Большое спасибо!', 'Спасибо большое', 'Спасибо', 'Благодарю', 'Благодарствую', 'Мерси', 'Большое спасибо', 'Спасибо большое', 'Спасибо большое,', 'Спасибо,', 'Благодарю,', 'Благодарствую,', 'Мерси,', 'Большое спасибо,', 'Спасибо за ответ', 'Спасибо за ответ!', 'Спасибо за информацию!', 'Спасибо за информацию.']:
-            if message.reply_to_message and message.reply_to_message.from_user.username:
-                recipient_username = message.reply_to_message.from_user.username
-                await self.bot.send_message(chat_id=message.chat.id, text=f"❤️ @{username} выразил(а) Вам благодарность!", reply_to_message_id=message.reply_to_message.message_id)
